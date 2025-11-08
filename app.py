@@ -6,6 +6,7 @@ from bokeh.models import ColumnDataSource, HoverTool
 import streamlit as st
 
 from streamlit_bokeh import streamlit_bokeh
+from streamlit_extras.metric_cards import style_metric_cards
 
 # Other Library
 from datetime import datetime
