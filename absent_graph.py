@@ -188,6 +188,6 @@ def plot_bubble_chart_with_images(df, plot_diameter=500):
     
     
 def absent_graph():
-    df = pd.read_excel('./ABSENT_RATIO.xlsx')
+    df = pd.read_pickle('./ABSENT_RATIO.pkl')
     df['image_url'] = df['image_url'].fillna('https://www.gravatar.com/avatar/?d=mp&s=200')
     return plot_bubble_chart_with_images(df[:100], plot_diameter=600)
