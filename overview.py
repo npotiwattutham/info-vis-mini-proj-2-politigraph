@@ -6,7 +6,9 @@ from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, HoverTool
 
 # Plotly Related Imports
-from absent_graph import absent_graph
+from visualizations.absent_graph import absent_graph
+from visualizations.timeline_gantt_chart import timeline_gantt_chart
+# from visualizations.calendar_map import calendar_heatmap_chart
 
 # Streamlit Component
 import streamlit as st
@@ -27,20 +29,59 @@ st.set_page_config(page_title="ภาพรวม",
 
 #region # Page Heading ############################################################################################################################
 st.header('ภาพรวมการทำงานของสมาชิกสภาผู้แทนราษฎรและสมาชิกวุฒิสภา')
-st.markdown('เนื่องจากเงินเดือนของสมาชิกสภาผู้แทนราษฎร (สส.) และสมาชิกวุฒิสภา (สว.) รวมไปถึงค่าใช้จ่ายต่าง ๆ ในการจัดประชุมสภา มาจากภาษีของประชาชน')
+st.markdown('เนื่องจากเงินเดือนของสมาชิกสภาผู้แทนราษฎร (สส.) และสมาชิกวุฒิสภา (สว.) รวมไปถึงค่าใช้จ่ายต่าง ๆ ในการจัดประชุมสภา ล้วนมาจากภาษีของประชาชน')
+
+st.divider()
+#endregion ########################################################################################################################################
+
+#region # Timeline ###############################################################################################################################
+st.subheader('วาระของสภาผู้แทนราษฎรและวุฒิสภา')
+viz_timeline = st.empty()
+
+st.divider()
+#endregion ########################################################################################################################################
+
+#region # CALENDAR HEATMAP ###############################################################################################################################
+st.subheader('วาระของสภาผู้แทนราษฎรและวุฒิสภา')
+viz_calendar = st.empty()
 
 st.divider()
 #endregion ########################################################################################################################################
 
 #region # Absent Rate #############################################################################################################################
 st.subheader('อัตราการลาหรือขาดประชุมของสมาชิก')
-st.warning('**_หมายเหตุ_** อัตราการลาหรือขาดประชุมของสมาชิก อาจเกิดขึ้นจากหลายสาเหตุ เช่น การติดภารกิจอื่น การลาป่วย หรือเหตุผลส่วนตัวอื่น ๆ จึงไม่ได้สะท้อนถึงความไม่รับผิดชอบของสมาชิกเสมอไป', icon=':material/info:')
-# st.warning('**_หมายเหตุ_** อัตราการขาดประชุมของสมาชิก ไม่ได้สะท้อนถึงนิสัยหรือความรับผิดชอบของสมาชิก การลา/ขาดประชุม อาจเกิดขึ้นจากปัจจัยอื่น เช่น การติดภารกิจอื่น การลาป่วย หรือเหตุส่วนตัวอื่น ๆ', icon=':material/info:')
+st.warning(f"""**หมายเหตุ:** อัตราการลาหรือขาดประชุมของสมาชิก อาจเกิดขึ้นจากหลายสาเหตุ เช่น การติดภารกิจอื่น การลาป่วย หรือเหตุผลส่วนตัวอื่น ๆ 
+        **จึงไม่ได้สะท้อนถึงความไม่รับผิดชอบของสมาชิกเสมอไป**""", icon=':material/warning:')
 
-fig = absent_graph()
-st.plotly_chart(figure_or_data=fig, config = {'width': 'stretch'})
+columns = st.columns(3)
+
+with columns[0]:
+    st.markdown('#### ภาพรวม')
+
+with columns[1]:
+    st.markdown('#### รายสมาชิก')
+    viz_packed_bubble_chart = st.empty()
+    
+with columns[2]:
+    st.markdown('#### รายสังกัด')
+    
 
 st.divider()
 #endregion ########################################################################################################################################
 
+# Render Visualization
+with viz_timeline:
+    with st.spinner('Loading Visualization', show_time=True):
+        fig = timeline_gantt_chart()
+viz_timeline.plotly_chart(figure_or_data=fig, config = {'width': 'stretch'})
 
+# with viz_calendar:
+    # with st.spinner('Loading Visualization', show_time=True):
+        # fig = calendar_heatmap_chart()
+# viz_calendar.plotly_chart(figure_or_data=fig, config = {'width': 'stretch'})
+
+with viz_packed_bubble_chart:
+    with st.spinner('Loading Visualization', show_time=True):
+        fig = absent_graph()
+viz_packed_bubble_chart.plotly_chart(figure_or_data=fig, config = {'width': 'stretch',
+                                                                   'dragMode': 'pan'})

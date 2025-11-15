@@ -5,18 +5,21 @@
     font-size: 16px;
 }
 
+.stSelectbox label, .stSelectbox div[data-baseweb="select"] * {
+    font-family: 'Noto Sans Thai Looped', sans-serif !important;
+    font-size: 16px;
+}
 
 /* Hide Metric Arrow */
 [data-testid="stMetricDelta"] svg {
         display: none;
 }
 
-
 .stMarkdownBadge {
     font-size: 40px !important;
 }   
 
-.text {
+.text, .li {
     font-family: 'Noto Sans Thai Looped', sans-serif !important;
     font-size: 16px;
 }

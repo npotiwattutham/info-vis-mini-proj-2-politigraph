@@ -1,6 +1,8 @@
 streamlit
-streamlit_bokeh
+streamlit_plotly_events
 bokeh
 pandas
 pythainlp
 plotly
+requests
+streamlit_autocomplete
